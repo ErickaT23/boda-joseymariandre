@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nicolas & Amalia</title>
+  <title>José Andrés & Mariandrea</title>
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Nos Casamos Nicolas & Amalia">
+  <meta property="og:title" content="Nos Casamos José Andrés & Mariandrea">
   <meta property="og:description" content="Te invitamos a celebrar nuestro matrimonio.">
-  <meta property="og:image" content="https://i.postimg.cc/QtLNDwD0/MNA.png">
-  <meta name="keywords" content="invitación de boda, Nicolas, Amalia, boda, amor, celebración">
+  <meta property="og:image" content="https://images.pexels.com/photos/37463264/pexels-photo-37463264.png">
+  <meta name="keywords" content="invitación de boda, José Andrés,Mariandrea, boda, amor, celebración">
   <meta name="author" content="Two Design | Invitaciones Digitales">
   <link rel="stylesheet" href="style.css">
   <!-- (Opcional) Fonts -->
@@ -22,14 +22,14 @@
 <header class="cover" id="cover">
   <div class="cover-inner">
     <div class="mono">
-      <img src="images/MONOGRAMA.svg" alt="Monograma Nicolas & Abihgail" class="mono-img">
+      <img src="images/MONOGRAMA-BLACK.png" alt="Monograma José Andrés & Mariandrea" class="mono-img">
     </div>
-    <h1 class="couple">Nicolas <span class="amp">&</span> Amalia</h1>
+    <h1 class="couple">José Andrés Alvarizaes <span class="amp">&</span> Mariandrea Muralles </h1>
     <p class="tag">Nos casamos</p>
 
-    <div class="envelope-wrap">
+    <button class="envelope-wrap" id="btnOpenEnvelope" type="button" aria-label="Abrir invitación desde sobre">
       <img class="envelope" src="images/ENVELOPE.svg" alt="Sobre invitación">
-    </div>
+    </button>
 
     <div class="guest-card">
       <div class="guest-line" id="guestCardName">Nombre del invitado</div>
@@ -44,7 +44,6 @@
     </button>
   </div>
 
-  <div class="scroll-hint">Desliza para ver más</div>
 </header>
 
 <!-- ===================== CONTENIDO INVITACIÓN ===================== -->
@@ -54,48 +53,48 @@
   <section class="hero-photo fade-in-element" id="hero">
     <div class="hero-overlay">
       <div class="mono hero-mono fade-in-element">
-        <img src="images/MONOGRAMA-BLACK.svg" alt="Monograma" class="mono-img hero-mono-img">
+        <img src="images/MONOGRAMA-BLACK.png" alt="Monograma" class="mono-img hero-mono-img">
       </div>
     </div>
   </section>
 
-  <div class="hero-quote">
-    <p class="quote-script reveal-gold">Nos Casamos</p>
-  </div>
-
   <!-- NOMBRES EDITORIAL + FECHA VERTICAL + MÚSICA -->
   <section class="names-editorial fade-in-element" id="names">
+    <p class="intro-text intro-verse">
+      Así que no volverán a ser ya dos, sino<br>
+      una sola carne. Por lo tanto, lo que Dios<br>
+      ha unido que no lo separe el hombre.<br>
+      (Mateo 19:6)
+    </p>
+
+    <p class="intro-text">
+      Con el apoyo de quienes más nos aman y la<br>
+      bendición de Dios
+    </p>
+
+    <p class="intro-text intro-last">
+      Les invitamos a celebrar la unión de:
+    </p>
+
     <div class="names-grid">
       <div class="names-block">
         <div class="name-lines">
-          <div>NICOLAS L.</div>
-          <div>BLANCO</div>
+          <div>José Andrés</div>
+          <div>Alvarizaes Morales</div>
           <div class="and">&</div>
-          <div>AMALIA R.</div>
-          <div>VARGAS</div>
+          <div>Mariandrea</div>
+          <div>Muralles Zamora</div>
         </div>
       </div>
 
       <div class="date-vertical">
-        <span>12</span>
-        <span>04</span>
-        <span>27</span>
+        <span>07</span>
+        <span>11</span>
+        <span>26</span>
       </div>
     </div>
 
 
-    <p class="names-text">
-      Todos los días juntos son maravillosos y queremos que nos acompañen en el más importante de nosotros.
-    </p>
-
-    <p class="music-text">Dale play</p>
-    <button class="music-btn" id="btnMusic" type="button" aria-label="Música">
-      ▶
-    </button>
-    
-    <audio id="bgMusic" preload="auto" loop>
-      <source src="music.mp3" type="audio/mpeg">
-    </audio>
   </section>
 
   <!-- CONTADOR -->
@@ -145,92 +144,71 @@
       </div>
     </div>
 
-    <a class="btn-outline calendar-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Nos+casamos+Nicolas+%26+Amalia+%F0%9F%92%8D%F0%9F%92%9A&dates=20260412/20260413&details=Boda+de+Nicolas+y+Amalia&location=" target="_blank" rel="noopener">Agregar al calendario</a>
-
     <div class="half-photo">
-      <img src="images/H3.jpg" alt="Foto pareja">
+      <img src="images/S1.jpeg" alt="Foto pareja">
     </div>
   </section>
 
-  <section class="blessing fade-in-element" id="blessing">
- <h3>Con la bendición de Dios y de nuestros padres</h3>
-
-    <div class="parents">
-      <p><strong>Padres del novio</strong><br>Roberto Blanco & Anabella de Blanco</p>
-      <p><strong>Padres de la novia</strong><br>Armando Vargas & Helena de Vargas</p>
-    </div>
-
-    <div class="godparents">
-      <h4>Nuestros Padrinos</h4>
-      <p>Arturo Montalvo e Irene de Montalvo</p>
-    </div>
-  </section>
 <!-- FOTO FULLSCREEN SEPARADOR -->
-<section class="full-sep" style="background-image:url('images/V5.jpg')"></section>
-  <!-- ITINERARIO -->
-  <section class="itinerary fade-in-element" id="itinerary">
-
-    <div class="event-card">
-      <div class="event-top">
-        <div class="event-icon">
-          <img src="images/CHURCH.svg" alt="Ceremonia">
-        </div>
-        <div>
-          <div class="event-title">Ceremonia</div>
-          <div class="event-place">Iglesia de la Merced</div>
-          <div class="event-time">3:30 pm</div>
-        </div>
-         <!-- IMAGEN DEL LUGAR -->
-        <div class="event-photo">
-          <img src="Images/iglesialamerced.png" alt="Lugar de la ceremonia">
-        </div>
-      </div>
-      <div class="event-address">6ta Avenida Norte y 1ra Calle Poniente, Antigua Guatemala.</div>
-      <a class="btn-outline" href="https://maps.app.goo.gl/uiiisP7QNhkmSADZ7" target="_blank" rel="noopener">Cómo llegar</a>
-    </div>
-
-    <div class="event-card">
-      <div class="event-top">
-        <div class="event-icon">
-          <img src="images/RECEPTION.svg" alt="Recepción">
-        </div>
-        <div>
-          <div class="event-title">Recepción</div>
-          <div class="event-place">Convento de la Merced</div>
-          <div class="event-time">5:00 pm</div>
-        </div>
-         <!-- IMAGEN DEL LUGAR -->
-        <div class="event-photo">
-          <img src="images/lamerced.png" alt="Lugar de la ceremonia">
-        </div>
-      </div>
-      <div class="event-address">6ta Avenida Norte y 1ra Calle Poniente, Antigua Guatemala.</div>
-      <a class="btn-outline" href="https://maps.app.goo.gl/Ti9Ssf3k27TTDycbA" target="_blank" rel="noopener">Cómo llegar</a>
-    </div>
-  </section>
-
-  <!-- FOTO FULLSCREEN SEPARADOR -->
-  <section class="full-sep" style="background-image:url('images/V2.jpg')"></section>
-
-  <!-- DRESS CODE -->
+  <!-- ATTIRE -->
   <section class="dress fade-in-element" id="dress">
     <div class="event-icon">
-      <img src="images/DRESSCODE.svg" alt="Ceremonia">
+      <img src="images/DRESSCODE.svg" alt="Attire">
     </div>
-    <h3>Código de vestimenta</h3>
-    <p class="dress-strong">Vestimenta formal</p>
-    <p class="dress-note">El color blanco y sus derivados están reservados para la novia al igual que el verde olivo para las damas, al ser un evento en jardín se sugiere llevar zapatos cómodos.</p>
+    <h3>Attire</h3>
+    <p class="venue-title">FORMAL</p>
+    <p class="dress-note">Damas: vestido largo</p>
+    <p class="dress-note">Caballeros: traje completo</p>
+    <p class="dress-note">*Reservaremos los colores dorado/beige para el cortejo únicamente y el blanco para la novia.</p>
   </section>
 
-      <!-- NO NIÑOS -->
-      <section class="no-kids fade-in-element" id="noKids">
-        <p>
-          Esta celebración será exclusivamente para adultos. Agradecemos su comprensión.
-        </p>
-      </section>
+  <section class="full-sep" style="background-image:url('Images/S2.jpeg')"></section>
 
-  <section class="full-sep" style="background-image:url('images/V6.jpg')"></section>
+  <section class="venues fade-in-element" id="venues">
+    <h3>Venues &amp; Schedules</h3>
 
+    <article class="venue-item">
+      <div class="event-icon">
+        <img src="images/CHURCH.svg" alt="Ceremonia Religiosa">
+      </div>
+      <p class="venue-title">Ceremonia Religiosa</p>
+      <p class="venue-place">Capilla Inmaculada Concepción, CAES KM 16</p>
+      <p class="venue-time">4:00 pm</p>
+      <a class="btn-venue" href="https://maps.app.goo.gl/7hsNg6XYGpHXbU599" target="_blank" rel="noopener">Cómo llegar</a>
+    </article>
+
+    <article class="venue-item">
+      <div class="event-icon">
+        <img src="images/CHEERS.svg" alt="Speakeasy - Precopeo">
+      </div>
+      <p class="venue-title">Speakeasy - Precopeo</p>
+      <p class="venue-place">Jardín El Cerro, CAES KM 16</p>
+      <p class="venue-time">6:00 pm</p>
+      <a class="btn-venue" href="https://maps.app.goo.gl/u9Momt6ffH4Eywtk8" target="_blank" rel="noopener">Cómo llegar</a>
+    </article>
+
+    <article class="venue-item">
+      <div class="event-icon">
+        <img src="images/DINNER.svg" alt="Cena">
+      </div>
+      <p class="venue-title">Cena</p>
+      <p class="venue-place">Jardín El Cerro, CAES KM 16</p>
+      <p class="venue-time">7:00 pm</p>
+      <a class="btn-venue" href="https://maps.app.goo.gl/u9Momt6ffH4Eywtk8" target="_blank" rel="noopener">Cómo llegar</a>
+    </article>
+
+    <article class="venue-item">
+      <div class="event-icon">
+        <img src="images/PARTY.svg" alt="Fiesta">
+      </div>
+      <p class="venue-title">Fiesta</p>
+      <p class="venue-place">Jardín El Cerro, CAES KM 16</p>
+      <p class="venue-time">8:00 pm - 1:00 am</p>
+      <a class="btn-venue" href="https://maps.app.goo.gl/u9Momt6ffH4Eywtk8" target="_blank" rel="noopener">Cómo llegar</a>
+    </article>
+  </section>
+
+  <section class="full-sep" style="background-image:url('Images/H1.jpeg')"></section>
   <!-- MESA DE REGALOS -->
 <!-- ================= MESA DE REGALOS ================= -->
 <section class="gifts fade-in-element" id="gifts">
@@ -239,52 +217,41 @@
     <img src="images/GIFTS.svg" alt="Gifts">
   </div>
 
-  <h3>Regalos</h3>
+  <h3>Agradecimientos &amp; Obsequios</h3>
 
   <p class="gifts-strong">
-    Si desean hacernos llegar su muestra de cariño, pueden hacerlo a través de nuestra lista de regalos
-    o mediante transferencia bancaria.
+    Tu presencia y cariño siempre será el<br>
+    mejor regalo, contamos contigo para<br>
+    seguir celebrando.
   </p>
 
   <div class="gifts-buttons">
-    <a class="btn-outline"
-       href="#"
-       target="_blank"
-       rel="noopener">
-       Ver mesa de regalos
-    </a>
-
-    <button class="btn-outline btn-shimmer" id="btnTransferencia" type="button">
-      Transferencia bancaria
-    </button>
+    <button class="btn-venue" id="btnVerCuentas" type="button">Ver Cuentas</button>
   </div>
+
+  <p class="gifts-cash-note">Efectivo</p>
 
 </section>
 
+<div class="section-divider" aria-hidden="true"></div>
 
-<!-- ================= MODAL TRANSFERENCIA ================= -->
-<div id="transferBackdrop" class="transfer-backdrop" aria-hidden="true" style="display:none">
+<div id="accountsBackdrop" class="transfer-backdrop" aria-hidden="true" style="display:none">
   <div class="transfer-modal" role="dialog" aria-modal="true">
-
-    <button class="transfer-close" id="btnCloseTransfer" type="button">×</button>
-
-    <h3>Datos de Transferencia</h3>
-
-    <p class="transfer-names">Nicolas & Amalia</p>
-
-    <div class="transfer-info" id="transferData">
-      <p><strong>Banco:</strong> <span id="bankName">Banco Industrial</span></p>
-      <p><strong>Cuenta:</strong> <span id="accountNumber">123456789</span></p>
-      <p><strong>Tipo:</strong> <span id="accountType">Monetaria</span></p>
-      <p><strong>Nombre:</strong> <span id="accountOwner">Nicolas & Amalia</span></p>
+    <button class="transfer-close" id="btnCloseAccounts" type="button">×</button>
+    <h3>Ver Cuentas</h3>
+    <div class="gifts-buttons modal-account-buttons">
+      <button class="btn-venue" id="btnCuentaNovio" type="button">Cuenta Novio</button>
+      <button class="btn-venue" id="btnCuentaNovia" type="button">Cuenta Novia</button>
     </div>
-    
-    <button class="btn-outline copy-btn" id="btnCopyAccount" type="button">
-      Copiar datos bancarios
-    </button>
+  </div>
+</div>
 
-    <div id="copyToast" class="copy-toast" style="display:none">✅ Copiado</div>
-
+<div id="accountDetailBackdrop" class="transfer-backdrop" aria-hidden="true" style="display:none">
+  <div class="transfer-modal" role="dialog" aria-modal="true">
+    <button class="transfer-close" id="btnCloseAccountDetail" type="button">×</button>
+    <h3 id="accountDetailTitle">Cuenta</h3>
+    <div class="transfer-info" id="accountDetailInfo"></div>
+    <button class="btn-venue copy-account-btn" id="btnCopyAccountDetail" type="button">Copiar datos</button>
   </div>
 </div>
 
@@ -295,60 +262,54 @@
   <div class="event-icon">
     <img src="images/RSVP.svg" alt="RSVP">
   </div>
-  <h3>Confirmar Asistencia</h3>
+  <h3>Confirma tu Asistencia</h3>
   <p class="rsvp-strong">
     Para nosotros es muy importante que confirmes tu asistencia lo antes posible,
     o bien indicarnos si no podrás acompañarnos.
   </p>
 
-  <button id="btnConfirmarRsvp" type="button">
-    Confirmar
-  </button>
+  <div class="rsvp-inline" id="rsvpInline">
+    <label for="rsvpNombre" class="rsvp-label">Nombre</label>
+    <input id="rsvpNombre" type="text" readonly>
+
+    <p class="rsvp-label rsvp-choice-label">¿Asistirás?</p>
+    <div class="rsvp-actions">
+      <button id="btnRsvpSi" class="rsvp-btn rsvp-yes" type="button">Sí, es un gusto.</button>
+      <button id="btnRsvpNo" class="rsvp-btn rsvp-no" type="button">No, lamentablemente no podré.</button>
+    </div>
+
+    <div id="rsvpGuestsWrap" class="rsvp-guests-wrap" style="display:none">
+      <label for="rsvpGuests" class="rsvp-label">Número de invitados</label>
+      <select id="rsvpGuests"></select>
+    </div>
+
+    <button id="btnConfirmarRsvp" type="button">Confirmar</button>
+  </div>
 
   <div id="msgRsvp" class="rsvp-msg" style="display:none"></div>
 </section>
 
-<!-- ================= RSVP MODAL ================= -->
-<div id="rsvpBackdrop" class="rsvp-backdrop" aria-hidden="true" style="display:none">
-  <div class="rsvp-modal" role="dialog" aria-modal="true">
-    <button class="rsvp-close" id="btnRsvpClose" type="button">×</button>
-
-    <h3>Confirmación de asistencia</h3>
-    <p class="rsvp-sub">Por favor selecciona una opción</p>
-
-    <label>Nombre</label>
-    <input id="rsvpNombre" type="text" readonly>
-
-    <label>Cantidad de pases</label>
-    <input id="rsvpPases" type="text" readonly>
-
-    <div class="rsvp-actions">
-      <button id="btnRsvpSi" class="rsvp-btn rsvp-yes">Sí, asistiré</button>
-      <button id="btnRsvpNo" class="rsvp-btn rsvp-no">No, asistiré</button>
-    </div>
-
-    <div id="rsvpMsgModal" class="rsvp-msg" style="display:none"></div>
+<div id="rsvpResultBackdrop" class="transfer-backdrop" aria-hidden="true" style="display:none">
+  <div class="transfer-modal" role="dialog" aria-modal="true">
+    <button class="transfer-close" id="btnCloseRsvpResult" type="button">×</button>
+    <h3>Confirmación</h3>
+    <p class="rsvp-result-text" id="rsvpResultText"></p>
+    <button class="btn-venue" id="btnOkRsvpResult" type="button">Entendido</button>
   </div>
 </div>
 
-<section class="full-sep" style="background-image:url('images/V4.jpg')"></section>
-  <!-- FRASE FINAL -->
-  <section class="love-quote fade-in-element" id="love">
-    <p class="quote-script">"El amor se compone de una sola alma que habita en dos cuerpos" — Aristóteles.</p>
-  </section>
-
   <!-- FOTO CAMBIANTE -->
   <section class="full-sep full-sep-rotating" id="rotatingSep">
-    <img id="rotatingSepImg" src="images/V4.jpg" alt="Foto pareja">
+    <img id="rotatingSepImg" src="images/FS1.jpeg" alt="Foto pareja">
   </section>
 
   <!-- CIERRE -->
   <section class="closing fade-in-element" id="closing">
     <div class="mono">
-      <img src="images/MONOGRAMA.svg" alt="Monograma Nicolas & Abihgail" class="mono-img">
+      <img src="images/MONOGRAMA-BLACK.png" alt="Monograma José Andrés & Mariandrea" class="mono-img">
     </div>
-    <h3>Nicolas & Amalia</h3>
-    <p>12 de Abril de 2027</p>
+    <h3>José Andrés & Mariandrea</h3>
+    <p>7 de noviembre de 2026</p>
   </section>
 
   <!-- FOOTER -->

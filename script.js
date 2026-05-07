@@ -13,24 +13,24 @@ document.addEventListener("DOMContentLoaded", () => {
     btnOpenInvite.addEventListener("click", openInvitation);
   }
 
+  const btnOpenEnvelope = $$("#btnOpenEnvelope");
+  if (btnOpenEnvelope) {
+    btnOpenEnvelope.addEventListener("click", openInvitation);
+  }
+
   // 3) Animaciones al hacer scroll
   initScrollReveal();
 
   initGoldReveal();
 
-  // 4) Música
-  initMusic();
-
-  // 5) Contador (cambia a tu fecha real)
+  // 4) Contador (cambia a tu fecha real)
   // Formato recomendado: YYYY-MM-DDT00:00:00-06:00 (Guatemala -06)
-  initFlipCountdown("2027-04-12T00:00:00-06:00");
+  initFlipCountdown("2026-11-07T00:00:00-06:00");
 
-  // 6) Foto separador rotativa (si existe el elemento)
+  // 5) Foto separador rotativa (si existe el elemento)
   initRotatingSep([
-    "images/H1.jpg",
-    "images/H2.jpg",
-    "images/V3.jpg",
-    
+    "Images/FS2.jpeg",
+    "Images/FS3.jpeg",
   ]);
 });
 
@@ -75,9 +75,6 @@ function openInvitation() {
     main.classList.add("is-open");
     main.setAttribute("aria-hidden", "false");
 
-    // ✅ Reproducir música automáticamente (por el click del usuario)
-    await autoplayMusic();
-
     // Scroll suave al hero
     setTimeout(() => {
       $$("#hero")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -120,52 +117,6 @@ function initGoldReveal() {
   );
 
   obs.observe(el);
-}
-
-/* ===================== MÚSICA ===================== */
-/* ===================== MÚSICA ===================== */
-function initMusic() {
-  const btn = $$("#btnMusic");
-  const audio = $$("#bgMusic");
-  if (!btn || !audio) return;
-
-  // asegurar loop
-  audio.loop = true;
-
-  // Estado inicial del botón
-  btn.textContent = "▶";
-
-  // Click manual play/pause
-  btn.addEventListener("click", async () => {
-    try {
-      if (audio.paused) {
-        await audio.play();
-        btn.textContent = "❚❚";
-      } else {
-        audio.pause();
-        btn.textContent = "▶";
-      }
-    } catch (e) {
-      console.warn("No se pudo reproducir audio:", e);
-    }
-  });
-}
-
-/* ===================== AUTO-PLAY AL ABRIR ===================== */
-async function autoplayMusic() {
-  const btn = $$("#btnMusic");
-  const audio = $$("#bgMusic");
-  if (!btn || !audio) return;
-
-  try {
-    audio.loop = true;
-    await audio.play();
-    btn.textContent = "❚❚";
-  } catch (e) {
-    // Si el navegador bloquea, dejamos en play para que el usuario lo inicie
-    console.warn("Auto-play bloqueado:", e);
-    btn.textContent = "▶";
-  }
 }
 
 /* ===================== CONTADOR ===================== */
@@ -297,10 +248,8 @@ function initFlipCountdown(targetISO){
 // ================= ANIMACIONES POR SECCIÓN (AUTO) =================
 document.addEventListener("DOMContentLoaded", () => {
   const sections = document.querySelectorAll("section");
-
-  // fallback por si el navegador no soporta IntersectionObserver
   if (!("IntersectionObserver" in window)) {
-    sections.forEach(s => s.classList.add("is-visible"));
+    sections.forEach((s) => s.classList.add("is-visible"));
     return;
   }
 
@@ -308,139 +257,128 @@ document.addEventListener("DOMContentLoaded", () => {
     entries.forEach((e) => {
       if (e.isIntersecting) {
         e.target.classList.add("is-visible");
-        io.unobserve(e.target); // solo una vez
+        io.unobserve(e.target);
       }
     });
   }, { threshold: 0.18 });
 
-  sections.forEach(s => io.observe(s));
+  sections.forEach((s) => io.observe(s));
 });
 
-// ================= TRANSFERENCIA MODAL =================
-document.addEventListener("DOMContentLoaded", function(){
-
-  const btnOpen = document.getElementById("btnTransferencia");
-  const btnClose = document.getElementById("btnCloseTransfer");
-  const backdrop = document.getElementById("transferBackdrop");
-
-  if(btnOpen){
-    btnOpen.addEventListener("click", function(){
-      backdrop.style.display = "flex";
-    });
-  }
-
-  if(btnClose){
-    btnClose.addEventListener("click", function(){
-      backdrop.style.display = "none";
-    });
-  }
-
-  if(backdrop){
-    backdrop.addEventListener("click", function(e){
-      if(e.target === backdrop){
-        backdrop.style.display = "none";
-      }
-    });
-  }
-
-});
-
-//COPIAR CUENTA//
-// ================= TRANSFERENCIA MODAL + COPIAR CUENTA =================
+// ================= GIFTS POPUPS =================
 document.addEventListener("DOMContentLoaded", () => {
-  const btnOpen = document.getElementById("btnTransferencia");
-  const btnClose = document.getElementById("btnCloseTransfer");
-  const backdrop = document.getElementById("transferBackdrop");
+  const btnOpen = document.getElementById("btnVerCuentas");
+  const accountsBackdrop = document.getElementById("accountsBackdrop");
+  const accountDetailBackdrop = document.getElementById("accountDetailBackdrop");
+  const btnCloseAccounts = document.getElementById("btnCloseAccounts");
+  const btnCloseAccountDetail = document.getElementById("btnCloseAccountDetail");
+  const btnCuentaNovio = document.getElementById("btnCuentaNovio");
+  const btnCuentaNovia = document.getElementById("btnCuentaNovia");
+  const detailTitle = document.getElementById("accountDetailTitle");
+  const detailInfo = document.getElementById("accountDetailInfo");
+  const btnCopyAccountDetail = document.getElementById("btnCopyAccountDetail");
 
-  const btnCopy = document.getElementById("btnCopyAccount");
-  const accountEl = document.getElementById("accountNumber");
-  const toast = document.getElementById("copyToast");
+  const openModal = (el) => {
+    if (!el) return;
+    el.style.display = "flex";
+    el.setAttribute("aria-hidden", "false");
+    requestAnimationFrame(() => el.classList.add("is-open"));
+  };
 
-  function openModal(){
-    if(!backdrop) return;
-    backdrop.style.display = "flex";
-    backdrop.setAttribute("aria-hidden", "false");
-  }
+  const closeModal = (el) => {
+    if (!el) return;
+    el.classList.remove("is-open");
+    setTimeout(() => {
+      el.style.display = "none";
+      el.setAttribute("aria-hidden", "true");
+    }, 260);
+  };
 
-  function closeModal(){
-    if(!backdrop) return;
-    backdrop.style.display = "none";
-    backdrop.setAttribute("aria-hidden", "true");
-  }
+  const renderAccount = (title, owner, bank, type, number) => {
+    if (!detailTitle || !detailInfo) return;
+    detailTitle.textContent = title;
+    detailInfo.innerHTML = `
+      <p><strong>Nombre:</strong> ${owner}</p>
+      <p><strong>Banco:</strong> ${bank}</p>
+      <p><strong>Tipo:</strong> ${type}</p>
+      <p><strong>No.:</strong> ${number}</p>
+    `;
+    detailInfo.dataset.copy = `Nombre: ${owner}\nBanco: ${bank}\nTipo: ${type}\nNo.: ${number}`;
+    closeModal(accountsBackdrop);
+    openModal(accountDetailBackdrop);
+  };
 
-  async function copyText(text){
-    // Clipboard API (moderno)
+  const copyText = async (text) => {
     if (navigator.clipboard && window.isSecureContext) {
       await navigator.clipboard.writeText(text);
-      return true;
+      return;
     }
-
-    // Fallback
     const ta = document.createElement("textarea");
     ta.value = text;
     ta.style.position = "fixed";
     ta.style.left = "-9999px";
     document.body.appendChild(ta);
     ta.select();
-    const ok = document.execCommand("copy");
+    document.execCommand("copy");
     document.body.removeChild(ta);
-    return ok;
-  }
+  };
 
-  function showToast(msg){
-    if(!toast) return;
-    toast.textContent = msg;
-    toast.style.display = "block";
-    clearTimeout(window.__toastTimer);
-    window.__toastTimer = setTimeout(() => {
-      toast.style.display = "none";
-    }, 1400);
-  }
+  if (btnOpen) btnOpen.addEventListener("click", () => openModal(accountsBackdrop));
+  if (btnCloseAccounts) btnCloseAccounts.addEventListener("click", () => closeModal(accountsBackdrop));
+  if (btnCloseAccountDetail) btnCloseAccountDetail.addEventListener("click", () => closeModal(accountDetailBackdrop));
 
-  if (btnOpen) btnOpen.addEventListener("click", openModal);
-  if (btnClose) btnClose.addEventListener("click", closeModal);
-
-  if (backdrop) {
-    backdrop.addEventListener("click", (e) => {
-      if (e.target === backdrop) closeModal();
+  if (accountsBackdrop) {
+    accountsBackdrop.addEventListener("click", (e) => {
+      if (e.target === accountsBackdrop) closeModal(accountsBackdrop);
     });
   }
 
-  if (btnCopy) {
-    btnCopy.addEventListener("click", async () => {
-  
-      const bank = document.getElementById("bankName")?.textContent.trim();
-      const account = document.getElementById("accountNumber")?.textContent.trim();
-      const type = document.getElementById("accountType")?.textContent.trim();
-      const owner = document.getElementById("accountOwner")?.textContent.trim();
-  
-      const fullText = 
-  `Datos de Transferencia:
-  Banco: ${bank}
-  Cuenta: ${account}
-  Tipo: ${type}
-  Nombre: ${owner}`;
-  
+  if (accountDetailBackdrop) {
+    accountDetailBackdrop.addEventListener("click", (e) => {
+      if (e.target === accountDetailBackdrop) closeModal(accountDetailBackdrop);
+    });
+  }
+
+  if (btnCuentaNovio) {
+    btnCuentaNovio.addEventListener("click", () => {
+      renderAccount(
+        "Cuenta Novio",
+        "José Andrés Alvarizaes",
+        "Banco Industrial",
+        "Monetaria",
+        "4540063999"
+      );
+    });
+  }
+
+  if (btnCuentaNovia) {
+    btnCuentaNovia.addEventListener("click", () => {
+      renderAccount(
+        "Cuenta Novia",
+        "Mariandrea Muralles",
+        "Banco G&T",
+        "Ahorro",
+        "02981676065"
+      );
+    });
+  }
+
+  if (btnCopyAccountDetail) {
+    btnCopyAccountDetail.addEventListener("click", async () => {
+      const text = detailInfo?.dataset.copy || "";
+      if (!text) return;
       try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(fullText);
-        } else {
-          const ta = document.createElement("textarea");
-          ta.value = fullText;
-          ta.style.position = "fixed";
-          ta.style.left = "-9999px";
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand("copy");
-          document.body.removeChild(ta);
-        }
-  
-        showToast("✅ Datos bancarios copiados");
-  
-      } catch (err) {
-        showToast("⚠️ No se pudo copiar");
+        await copyText(text);
+        btnCopyAccountDetail.textContent = "Copiado";
+        setTimeout(() => {
+          btnCopyAccountDetail.textContent = "Copiar datos";
+        }, 1200);
+      } catch {
+        btnCopyAccountDetail.textContent = "No se pudo copiar";
+        setTimeout(() => {
+          btnCopyAccountDetail.textContent = "Copiar datos";
+        }, 1200);
       }
-  
     });
   }
 });
