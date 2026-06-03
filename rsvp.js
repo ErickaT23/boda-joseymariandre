@@ -49,6 +49,7 @@ function setupResultModal() {
 
 document.addEventListener("DOMContentLoaded", () => {
   const guest = getGuest();
+  const firebaseApi = window.eventFirebase;
   const inputName = $("#rsvpNombre");
   const selectGuests = $("#rsvpGuests");
   const guestsWrap = $("#rsvpGuestsWrap");
@@ -124,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
     guestsWrap.style.display = "none";
   });
 
-  btnConfirm.addEventListener("click", () => {
+  btnConfirm.addEventListener("click", async () => {
     if (!answer) {
       msg.style.display = "block";
       msg.className = "rsvp-msg error";
@@ -132,12 +133,32 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    btnConfirm.disabled = true;
+
     const state = {
+      eventId: firebaseApi?.eventId || "local",
+      guestId: guest.id,
+      guestName: guest.name,
+      assignedPasses: guest.passes,
       answer,
       guests: answer === "yes" ? Number(selectGuests.value || 1) : 0,
       at: Date.now(),
+      atLocal: new Date().toISOString(),
     };
     localStorage.setItem(keyFor(guest.id), JSON.stringify(state));
+
+    try {
+      if (firebaseApi?.enabled) {
+        await firebaseApi.saveRsvp(state);
+      }
+    } catch (error) {
+      console.error(error);
+      btnConfirm.disabled = false;
+      msg.style.display = "block";
+      msg.className = "rsvp-msg error";
+      msg.textContent = "Tu confirmación quedó guardada en este dispositivo. Revisa Firebase config.";
+      return;
+    }
 
     const popupText =
       answer === "yes"
