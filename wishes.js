@@ -5,8 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const messageInput = document.getElementById("wishMessage");
   const list = document.getElementById("wishesList");
   const msg = document.getElementById("wishMsg");
-  const firebaseApi = window.eventFirebase;
-  const localKey = `wishes_${firebaseApi?.eventId || "local"}`;
+  const eventId = window.config?.event?.defaultEventId || "joseandres-mariandrea-2026";
+  const rsvpDB = window.RSVPDatabase;
+  const localKey = `wishes_${eventId}`;
 
   if (!form || !nameInput || !messageInput || !list || !msg) return;
 
@@ -59,8 +60,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderWishes(getLocalWishes());
 
-  if (firebaseApi?.enabled) {
-    firebaseApi.listenWishes(renderWishes);
+  if (rsvpDB?.subscribeToWishes) {
+    rsvpDB.subscribeToWishes(eventId, (wishes) => {
+      renderWishes((wishes || []).map((wish) => ({
+        name: wish.nombre,
+        message: wish.mensaje,
+        createdAtLocal: wish.timestamp,
+      })));
+    }, console.error);
   }
 
   form.addEventListener("submit", async (event) => {
@@ -77,13 +84,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const wish = {
       name,
       message,
-      eventId: firebaseApi?.eventId || "local",
-      createdAtLocal: firebaseApi?.localCreatedAt?.() || new Date().toISOString(),
+      eventId,
+      createdAtLocal: new Date().toISOString(),
     };
 
     try {
-      if (firebaseApi?.enabled) {
-        await firebaseApi.saveWish(wish);
+      if (rsvpDB?.saveWish) {
+        await rsvpDB.saveWish(eventId, {
+          nombre: name,
+          mensaje: message,
+          timestamp: Date.now(),
+        });
       } else {
         saveLocalWish(wish);
         renderWishes(getLocalWishes());

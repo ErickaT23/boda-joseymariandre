@@ -49,7 +49,8 @@ function setupResultModal() {
 
 document.addEventListener("DOMContentLoaded", () => {
   const guest = getGuest();
-  const firebaseApi = window.eventFirebase;
+  const eventId = window.config?.event?.defaultEventId || "joseandres-mariandrea-2026";
+  const rsvpDB = window.RSVPDatabase;
   const inputName = $("#rsvpNombre");
   const selectGuests = $("#rsvpGuests");
   const guestsWrap = $("#rsvpGuestsWrap");
@@ -136,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btnConfirm.disabled = true;
 
     const state = {
-      eventId: firebaseApi?.eventId || "local",
+      eventId,
       guestId: guest.id,
       guestName: guest.name,
       assignedPasses: guest.passes,
@@ -148,15 +149,24 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem(keyFor(guest.id), JSON.stringify(state));
 
     try {
-      if (firebaseApi?.enabled) {
-        await firebaseApi.saveRsvp(state);
+      if (rsvpDB?.saveConfirmation) {
+        await rsvpDB.saveConfirmation(eventId, {
+          id: guest.id,
+          nombre: guest.name,
+          pasesAsignados: guest.passes,
+          respuesta: answer === "yes" ? "si" : "no",
+          cantidadConfirmada: answer === "yes" ? Number(selectGuests.value || 1) : 0,
+          fechaConfirmacion: Date.now(),
+        });
       }
     } catch (error) {
       console.error(error);
       btnConfirm.disabled = false;
       msg.style.display = "block";
       msg.className = "rsvp-msg error";
-      msg.textContent = "Tu confirmación quedó guardada en este dispositivo. Revisa Firebase config.";
+      msg.textContent = error?.code === "RSVP_ALREADY_CONFIRMED"
+        ? "Esta invitación ya fue confirmada anteriormente."
+        : "Tu confirmación quedó guardada en este dispositivo. Revisa Firebase.";
       return;
     }
 

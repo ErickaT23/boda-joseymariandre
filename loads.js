@@ -96,18 +96,31 @@ const guests = [
 ];
 
 window.guests = guests;
+window.LocalGuestSeeds = {
+  ...(window.LocalGuestSeeds || {}),
+  "joseandres-mariandrea-2026": guests.reduce((acc, guest) => {
+    acc[String(guest.id)] = {
+      id: String(guest.id),
+      nombre: guest.name,
+      pases: Number(guest.passes || 1),
+      activo: true,
+    };
+    return acc;
+  }, {}),
+};
 
 window.seedEventGuestsToFirebase = async function seedEventGuestsToFirebase() {
-  const firebaseApi = window.eventFirebase;
-  if (!firebaseApi?.enabled) {
-    console.warn("Firebase no está configurado. Pega firebaseConfig en firebase.js antes de sembrar invitados.");
+  const eventId = window.config?.event?.defaultEventId || "joseandres-mariandrea-2026";
+  const rsvpDB = window.RSVPDatabase;
+  if (!rsvpDB?.migrateLocalGuestsToFirebase) {
+    console.warn("RSVPDatabase no está disponible. Revisa que database.js esté cargado.");
     return { ok: false, guests: 0 };
   }
 
-  await firebaseApi.upsertEventConfig();
-  await Promise.all(guests.map((guest) => firebaseApi.upsertGuest(guest)));
-  console.log(`Invitados creados en Firebase: ${guests.length}`);
-  return { ok: true, guests: guests.length };
+  await rsvpDB.seedEventConfigToFirebase?.(eventId, { force: true });
+  const result = await rsvpDB.migrateLocalGuestsToFirebase(eventId, { force: true });
+  console.log(`Invitados creados en Firebase: ${result.total || guests.length}`);
+  return { ok: true, guests: result.total || guests.length };
 };
 
 // Helper: leer parámetros ?id=1
@@ -133,7 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (guest) {
     window.currentGuest = guest;
-    window.eventFirebase?.upsertGuest(guest).catch(console.error);
 
     // Si tienes estos elementos en alguna parte, los llena (opcional)
     const guestNameEl = document.getElementById("guest-name");

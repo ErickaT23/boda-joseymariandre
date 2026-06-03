@@ -2,14 +2,14 @@
 
 ## Firebase
 
-La invitación está preparada para usar la sombrilla:
+La invitación está preparada para usar la sombrilla de Realtime Database:
 
-- `events/joseandres-mariandrea-2026`
-- `events/joseandres-mariandrea-2026/guests`
-- `events/joseandres-mariandrea-2026/rsvps`
-- `events/joseandres-mariandrea-2026/wishes`
+- `eventos/joseandres-mariandrea-2026/config`
+- `eventos/joseandres-mariandrea-2026/invitados`
+- `eventos/joseandres-mariandrea-2026/rsvp`
+- `eventos/joseandres-mariandrea-2026/deseos`
 
-Para activar Firebase, pega la configuración web real en `firebase.js` dentro de `firebaseConfig`.
+La configuración Firebase está en `database.js`.
 
 Después de publicar o abrir la invitación con Firebase activo, entra una vez a:
 
@@ -17,10 +17,16 @@ Después de publicar o abrir la invitación con Firebase activo, entra una vez a
 index.html?seedGuests=1
 ```
 
-Eso creará/actualizará el config del evento y los 92 invitados en Firestore.
+Eso creará/actualizará el config del evento y los 92 invitados en Realtime Database.
 
-El dashboard administrativo está en:
+El administrador está en:
 
 ```text
-admin.html
+admin.html?key=twodesign123
+```
+
+El dashboard está en:
+
+```text
+dashboard.html
 ```
