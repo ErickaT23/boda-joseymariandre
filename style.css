@@ -263,14 +263,6 @@ a{
     letter-spacing: 0.01em;
   }
 
-  .intro-verse{
-    text-transform: lowercase;
-  }
-
-  .intro-verse::first-letter{
-    text-transform: uppercase;
-  }
-
   .intro-last{
     font-size:21px;
     margin-bottom:26px;
