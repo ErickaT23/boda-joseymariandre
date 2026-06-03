@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | José Andrés & Mariandrea</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Pinyon+Script&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+  <main class="admin-shell">
+    <header class="admin-header">
+      <div>
+        <p class="admin-kicker">Dashboard</p>
+        <h1>José Andrés & Mariandrea</h1>
+        <p id="adminStatus">Cargando información del evento...</p>
+      </div>
+      <div class="admin-actions">
+        <a class="admin-link" href="index.html">Ver invitación</a>
+        <button class="admin-link" id="btnRefreshAdmin" type="button">Actualizar</button>
+        <button class="admin-link" id="btnSeedGuestsAdmin" type="button">Crear invitados</button>
+      </div>
+    </header>
+
+    <section class="admin-alert" id="adminConfigAlert" hidden>
+      Firebase todavía no está activo. Pega el `firebaseConfig` real en `firebase.js` para ver RSVP y buenos deseos del deploy.
+    </section>
+
+    <section class="admin-cards" aria-label="Resumen RSVP">
+      <article class="admin-card">
+        <span>Invitados</span>
+        <strong id="statGuests">0</strong>
+      </article>
+      <article class="admin-card">
+        <span>Pases asignados</span>
+        <strong id="statPasses">0</strong>
+      </article>
+      <article class="admin-card">
+        <span>Confirmados</span>
+        <strong id="statYes">0</strong>
+      </article>
+      <article class="admin-card">
+        <span>No asistirán</span>
+        <strong id="statNo">0</strong>
+      </article>
+      <article class="admin-card">
+        <span>Pendientes</span>
+        <strong id="statPending">0</strong>
+      </article>
+      <article class="admin-card">
+        <span>Pases confirmados</span>
+        <strong id="statConfirmedPasses">0</strong>
+      </article>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <h2>RSVP</h2>
+        <input id="adminSearch" type="search" placeholder="Buscar invitado">
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Invitado</th>
+              <th>Pases</th>
+              <th>Respuesta</th>
+              <th>Asisten</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody id="adminRsvpRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <h2>Buenos Deseos</h2>
+        <span id="wishCount">0 mensajes</span>
+      </div>
+      <div class="admin-wishes" id="adminWishes"></div>
+    </section>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
+  <script src="firebase.js"></script>
+  <script src="loads.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

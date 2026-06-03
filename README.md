@@ -18,3 +18,9 @@ index.html?seedGuests=1
 ```
 
 Eso creará/actualizará el config del evento y los 92 invitados en Firestore.
+
+El dashboard administrativo está en:
+
+```text
+admin.html
+```

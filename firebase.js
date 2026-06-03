@@ -40,6 +40,9 @@ const firebaseServices = {
   upsertGuest: async () => null,
   saveRsvp: async () => null,
   saveWish: async () => null,
+  getGuests: async () => [],
+  getRsvps: async () => [],
+  getWishes: async () => [],
   listenWishes: () => () => {},
 };
 
@@ -86,6 +89,17 @@ if (window.firebase && hasFirebaseConfig(firebaseConfig)) {
     ...wish,
     createdAt: serverTimestamp(),
   });
+
+  firebaseServices.getGuests = () => firebaseServices.guestsRef.get()
+    .then((snapshot) => snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+
+  firebaseServices.getRsvps = () => firebaseServices.rsvpsRef.get()
+    .then((snapshot) => snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+
+  firebaseServices.getWishes = () => firebaseServices.wishesRef
+    .orderBy("createdAt", "desc")
+    .get()
+    .then((snapshot) => snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
 
   firebaseServices.listenWishes = (callback) => firebaseServices.wishesRef
     .orderBy("createdAt", "desc")
