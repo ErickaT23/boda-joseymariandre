@@ -37,7 +37,7 @@ const config = {
             titulo: "Ceremonia",
             lugar: "Capilla Inmaculada Concepción",
             hora: "4:00 PM",
-            direccion: "CAES KM 16",
+            direccion: "Km. 16 carretera a El Salavdor, Santa Catarina Pinula Interior Condado Concepción",
             ubicacionUrl: "https://maps.app.goo.gl/7hsNg6XYGpHXbU599"
         },
         recepcion: {

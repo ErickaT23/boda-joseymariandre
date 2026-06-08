@@ -4,7 +4,7 @@ const guests = [
   { id: "1", name: "Sr Carlos Vitola y Sra", passes: 2 },
   { id: "2", name: "Sr Giancarlo Vitola y Sra", passes: 2 },
   { id: "3", name: "Angie Vitola", passes: 1 },
-  { id: "4", name: "Sr Franco Vitola y Sra", passes: 1 },
+  { id: "4", name: "Sr Franco Vitola y Sra", passes: 2 },
   { id: "5", name: "Sr Mario Zamora y Sra", passes: 2 },
   { id: "6", name: "Sandra Varela", passes: 1 },
   { id: "7", name: "Sr Carlos Ramírez y Sra", passes: 2 },

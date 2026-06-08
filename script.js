@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
   paintGuestCard();
 
   // 2) Botón abrir invitación
+  initMusicPlayer();
+
   const btnOpenInvite = $$("#btnOpenInvite");
   if (btnOpenInvite) {
     btnOpenInvite.addEventListener("click", openInvitation);
@@ -65,6 +67,8 @@ function openInvitation() {
 
   if (!cover || !main) return;
 
+  playWeddingMusic();
+
   // Ocultar portada con animación
   cover.classList.add("is-hidden");
 
@@ -81,6 +85,55 @@ function openInvitation() {
     }, 100);
 
   }, 600);
+}
+
+/* ===================== MÚSICA ===================== */
+function initMusicPlayer() {
+  const audio = $$("#weddingMusic");
+  const bubble = $$("#musicBubble");
+  if (!audio || !bubble) return;
+
+  audio.loop = true;
+
+  bubble.addEventListener("click", async () => {
+    if (audio.paused) {
+      try {
+        await audio.play();
+        setMusicBubbleState(true);
+      } catch {
+        setMusicBubbleState(false);
+      }
+      return;
+    }
+
+    audio.pause();
+    setMusicBubbleState(false);
+  });
+}
+
+async function playWeddingMusic() {
+  const audio = $$("#weddingMusic");
+  const bubble = $$("#musicBubble");
+  if (!audio || !bubble) return;
+
+  bubble.hidden = false;
+
+  try {
+    await audio.play();
+    setMusicBubbleState(true);
+  } catch {
+    setMusicBubbleState(false);
+  }
+}
+
+function setMusicBubbleState(isPlaying) {
+  const bubble = $$("#musicBubble");
+  if (!bubble) return;
+
+  bubble.classList.toggle("is-playing", isPlaying);
+  bubble.setAttribute("aria-label", isPlaying ? "Pausar música" : "Reproducir música");
+  bubble.setAttribute("aria-pressed", String(isPlaying));
+  bubble.innerHTML = `<i class="fa-solid ${isPlaying ? "fa-pause" : "fa-play"}" aria-hidden="true"></i>`;
 }
 
 /* ===================== REVEAL AL SCROLL ===================== */
