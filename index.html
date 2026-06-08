@@ -253,6 +253,38 @@
   </div>
 </div>
 
+<section class="wishes fade-in-element" id="wishesSection">
+  <div class="event-icon">
+    <img src="images/BUENOSDESEOS.png" alt="Buenos Deseos">
+  </div>
+  <h3>Buenos Deseos</h3>
+  <p class="wishes-strong">
+    Déjanos un mensaje lleno de cariño para guardar este recuerdo por siempre.
+  </p>
+
+  <div class="wishes-buttons">
+    <button class="btn-venue" type="button" onclick="toggleWishForm()">Escribir Deseo</button>
+    <button class="btn-venue" type="button" onclick="toggleWishes()">Ver Deseos</button>
+  </div>
+
+  <div class="wish-form-panel hidden" id="wish-form-panel">
+    <form class="wish-form" id="wish-form" onsubmit="return submitWish(event)">
+      <label for="wish-name" class="wish-label">Nombre</label>
+      <input id="wish-name" type="text" autocomplete="name" required>
+
+      <label for="wish-message" class="wish-label">Mensaje</label>
+      <textarea id="wish-message" rows="4" required></textarea>
+
+      <button class="btn-venue" type="submit">Enviar Deseo</button>
+      <p class="wish-status" id="wish-status" aria-live="polite"></p>
+    </form>
+  </div>
+
+  <div class="wishes-list hidden" id="wishes"></div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
   <!-- RSVP (TU BLOQUE) -->
   <!-- Pega aquí exactamente tu sección RSVP + Modal (como lo enviaste) -->
   <!-- ================= RSVP SECTION ================= -->
