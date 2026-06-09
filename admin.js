@@ -655,6 +655,16 @@
         }));
     }
 
+    function mergeInvitadosMaps(baseMap, overrideMap) {
+        const merged = new Map(baseMap || []);
+
+        (overrideMap || new Map()).forEach(function (guest, id) {
+            merged.set(id, guest);
+        });
+
+        return merged;
+    }
+
     function mapConfirmations(confirmations) {
         const latestByGuest = new Map();
 
@@ -1257,7 +1267,10 @@
         setInviteFormMessage("Guardando invitado...", false);
 
         try {
-            await state.db.createInvitado(state.eventId, payload);
+            const created = await state.db.createInvitado(state.eventId, payload);
+            const createdMap = mapInvitados([created || payload]);
+            state.invitadosMap = mergeInvitadosMaps(state.invitadosMap, createdMap);
+            refreshView();
             resetInviteForm();
             toggleInviteForm(false);
             setStatus("Invitado creado correctamente.", false);
@@ -1357,7 +1370,7 @@
                 const invitadosArray = Array.isArray(invitados) ? invitados : [];
                 state.hasRemoteInvitados = invitadosArray.length > 0;
                 state.invitadosMap = state.hasRemoteInvitados
-                    ? mapInvitados(invitadosArray)
+                    ? mergeInvitadosMaps(state.fallbackInvitadosMap, mapInvitados(invitadosArray))
                     : state.fallbackInvitadosMap;
                 refreshView();
             },
