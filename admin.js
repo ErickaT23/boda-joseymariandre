@@ -25,6 +25,8 @@
         eventId: "",
         db: null,
         invitadosMap: new Map(),
+        fallbackInvitadosMap: new Map(),
+        hasRemoteInvitados: false,
         confirmations: [],
         rows: [],
         editingGuestId: null,
@@ -632,6 +634,25 @@
         });
 
         return map;
+    }
+
+    function mapLocalGuestDirectory(eventId) {
+        const localSeeds = window.LocalGuestSeeds || window.DashboardGuestDirectoryByEvent || {};
+        const directory = localSeeds[eventId] || {};
+
+        if (Array.isArray(directory)) {
+            return mapInvitados(directory);
+        }
+
+        return mapInvitados(Object.keys(directory).map(function (id) {
+            const guest = directory[id] || {};
+            return {
+                id: guest.id || id,
+                nombre: guest.nombre || guest.name,
+                pases: guest.pases || guest.passes,
+                activo: typeof guest.activo === "undefined" ? true : Boolean(guest.activo)
+            };
+        }));
     }
 
     function mapConfirmations(confirmations) {
@@ -1333,7 +1354,11 @@
         const unsubscribeInvitados = db.subscribeToInvitados(
             state.eventId,
             function (invitados) {
-                state.invitadosMap = mapInvitados(invitados);
+                const invitadosArray = Array.isArray(invitados) ? invitados : [];
+                state.hasRemoteInvitados = invitadosArray.length > 0;
+                state.invitadosMap = state.hasRemoteInvitados
+                    ? mapInvitados(invitadosArray)
+                    : state.fallbackInvitadosMap;
                 refreshView();
             },
             function (error) {
@@ -1358,6 +1383,8 @@
         }
 
         state.eventId = resolveEventId(query.eventId);
+        state.fallbackInvitadosMap = mapLocalGuestDirectory(state.eventId);
+        state.invitadosMap = state.fallbackInvitadosMap;
         showApp(state.eventId);
         bindEvents();
         bindResponsiveRerender();
