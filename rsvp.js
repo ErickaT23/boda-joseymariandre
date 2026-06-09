@@ -48,9 +48,8 @@ function setupResultModal() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const guest = getGuest();
+  let guest = getGuest();
   const eventId = window.config?.event?.defaultEventId || "joseandres-mariandrea-2026";
-  const rsvpDB = window.RSVPDatabase;
   const inputName = $("#rsvpNombre");
   const selectGuests = $("#rsvpGuests");
   const guestsWrap = $("#rsvpGuestsWrap");
@@ -65,14 +64,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!inputName || !selectGuests || !guestsWrap || !btnYes || !btnNo || !btnConfirm || !msg || !intro) return;
 
-  inputName.value = guest.name;
-  selectGuests.innerHTML = "";
-  for (let i = 1; i <= guest.passes; i += 1) {
-    const option = document.createElement("option");
-    option.value = String(i);
-    option.textContent = String(i);
-    selectGuests.appendChild(option);
-  }
+  const renderGuestFields = () => {
+    inputName.value = guest.name;
+    selectGuests.innerHTML = "";
+    for (let i = 1; i <= guest.passes; i += 1) {
+      const option = document.createElement("option");
+      option.value = String(i);
+      option.textContent = String(i);
+      selectGuests.appendChild(option);
+    }
+  };
+
+  renderGuestFields();
+
+  window.addEventListener("guest:updated", () => {
+    guest = getGuest();
+    renderGuestFields();
+  });
 
   let answer = null;
 
@@ -149,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem(keyFor(guest.id), JSON.stringify(state));
 
     try {
+      const rsvpDB = window.RSVPDatabase;
       if (rsvpDB?.saveConfirmation) {
         await rsvpDB.saveConfirmation(eventId, {
           id: guest.id,

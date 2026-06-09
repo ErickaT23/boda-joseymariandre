@@ -6,6 +6,7 @@ const $$ = (s) => document.querySelector(s);
 document.addEventListener("DOMContentLoaded", () => {
   // 1) Pintar invitado en portada (desde loads.js)
   paintGuestCard();
+  window.addEventListener("guest:updated", paintGuestCard);
 
   // 2) Botón abrir invitación
   initMusicPlayer();

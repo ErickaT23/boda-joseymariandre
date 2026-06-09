@@ -129,6 +129,66 @@ function getQueryParam(key) {
   return params.get(key);
 }
 
+function notifyGuestUpdated() {
+  window.dispatchEvent(new CustomEvent("guest:updated", { detail: window.currentGuest || null }));
+}
+
+function setCurrentGuest(guest) {
+  if (!guest) {
+    window.currentGuest = null;
+    notifyGuestUpdated();
+    return;
+  }
+
+  window.currentGuest = {
+    id: String(guest.id),
+    name: String(guest.name || guest.nombre || "Invitado").trim() || "Invitado",
+    passes: Math.max(1, Number(guest.passes || guest.pases) || 1),
+  };
+
+  const guestNameEl = document.getElementById("guest-name");
+  const passesEl = document.getElementById("passes");
+
+  if (guestNameEl) guestNameEl.textContent = window.currentGuest.name;
+  if (passesEl) {
+    const p = Number(window.currentGuest.passes || 1);
+    passesEl.textContent = `${p} ${p === 1 ? "pase" : "pases"}`;
+  }
+
+  notifyGuestUpdated();
+}
+
+function waitForRSVPDatabase(timeoutMs = 8000) {
+  return new Promise((resolve, reject) => {
+    const start = Date.now();
+    const timer = window.setInterval(() => {
+      if (window.RSVPDatabase?.getInvitadoById) {
+        window.clearInterval(timer);
+        resolve(window.RSVPDatabase);
+        return;
+      }
+
+      if (Date.now() - start > timeoutMs) {
+        window.clearInterval(timer);
+        reject(new Error("RSVPDatabase no disponible."));
+      }
+    }, 50);
+  });
+}
+
+async function loadRemoteGuest(guestId) {
+  try {
+    const db = await waitForRSVPDatabase();
+    const eventId = window.config?.event?.defaultEventId || "joseandres-mariandrea-2026";
+    const remoteGuest = await db.getInvitadoById(eventId, guestId);
+    if (remoteGuest && remoteGuest.activo !== false) {
+      setCurrentGuest(remoteGuest);
+    }
+  } catch (error) {
+    console.warn("No se pudo cargar invitado remoto:", error);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const guestId = getQueryParam("id");
 
@@ -138,26 +198,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Si no hay id, no marcamos error: solo no hay invitado
   if (!guestId) {
-    window.currentGuest = null;
+    setCurrentGuest(null);
     return;
   }
 
   const guest = guests.find((g) => String(g.id) === String(guestId));
 
   if (guest) {
-    window.currentGuest = guest;
-
-    // Si tienes estos elementos en alguna parte, los llena (opcional)
-    const guestNameEl = document.getElementById("guest-name");
-    const passesEl = document.getElementById("passes");
-
-    if (guestNameEl) guestNameEl.textContent = guest.name;
-    if (passesEl) {
-      const p = Number(guest.passes || 1);
-      passesEl.textContent = `${p} ${p === 1 ? "pase" : "pases"}`;
-    }
+    setCurrentGuest(guest);
+    loadRemoteGuest(guestId);
   } else {
-    window.currentGuest = null;
+    setCurrentGuest(null);
+    loadRemoteGuest(guestId);
 
     const guestNameEl = document.getElementById("guest-name");
     if (guestNameEl) guestNameEl.textContent = "Invitado no encontrado";
