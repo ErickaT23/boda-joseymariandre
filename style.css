@@ -232,11 +232,16 @@ a{
   .hero-photo{
     height:100vh;
     position:relative;
-    background:url("images/FOTOINI.jpeg") center/cover no-repeat;
+    background:#111;
+    overflow:hidden;
   }
-  .hero-photo {
-    position: relative;
-    overflow: visible; /* IMPORTANTE */
+  .hero-photo::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:url("images/FOTOINI.jpeg") center/cover no-repeat;
+    filter:grayscale(100%) contrast(1.08) brightness(.92);
+    transform:scale(1.01);
   }
   .hero-overlay{
     position:absolute; inset:0;
